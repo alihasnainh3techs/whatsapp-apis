@@ -38,10 +38,6 @@ class MediaService {
   }
 
   async sendImageMessage(sessionId, number, caption, viewOnce, media) {
-
-    console.log("View onece: ", viewOnce);
-
-
     try {
       const sock = whatsappService.sessions.get(sessionId);
       if (!sock) {

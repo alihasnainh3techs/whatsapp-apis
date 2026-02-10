@@ -20,10 +20,6 @@ class Media {
 
   imageMessage = async (req, res) => {
     const { id, number, caption, viewOnce } = req.body;
-
-    console.log("Req Body: ", req.body);
-
-
     const media = req.file;
 
     const result = await mediaService.sendImageMessage(
