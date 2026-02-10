@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+
+# Logs
+logs/
+*.log
+
+# Build artifacts
+build/
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+*.tmp
+
+# Auth and session data
+auth/
+
+# Public uploads / temp media (if any)
+public/uploads/
+
+# Optional: VSCode settings
+.vscode/
+
+# Ignore lock files if using pnpm
+pnpm-lock.yaml

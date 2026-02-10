@@ -1,0 +1,32 @@
+{
+  "name": "whatsapp-apis",
+  "version": "1.0.0",
+  "description": "High-performance RESTful API for WhatsApp integration using Fastify and Baileys.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "",
+    "dev": "node index.js",
+    "format": "pnpm exec prettier . --write",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.29.2",
+  "dependencies": {
+    "baileys": "7.0.0-rc.9",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "link-preview-js": "^4.0.0",
+    "mongodb": "^7.1.0",
+    "multer": "^2.0.2",
+    "pino": "^10.3.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "prettier": "3.8.1"
+  }
+}
