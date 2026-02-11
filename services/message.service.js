@@ -73,7 +73,7 @@ class MessageService {
     });
   }
 
-  async sendLinkMessage(sessionId, number, message, link) {
+  async sendLinkMessage(sessionId, number, link) {
     const sock = whatsappService.sessions.get(sessionId);
     if (!sock) {
       throw new Error(`Session ${sessionId} is not active or connected.`);

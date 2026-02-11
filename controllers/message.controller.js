@@ -56,12 +56,11 @@ class Messages {
   };
 
   linkMessage = async (req, res) => {
-    const { id, number, message, link } = req.body;
+    const { id, number, link } = req.body;
 
     const result = await messageService.sendLinkMessage(
       id,
       number,
-      message,
       link,
     );
 
