@@ -1,30 +1,26 @@
 import whatsappService from '../services/whatsapp.service.js';
-import sessionRepo from '../repositories/session.repo.js';
+import devicesRepo from '../repositories/devices.repo.js';
 import { APIError } from '../utils/api-error.js';
 import { APIResponse } from '../utils/api-response.js';
 
 class AuthController {
-  showAllSessions = async (req, res) => {
-    const sessions = await sessionRepo.getSessions();
-    res
-      .status(200)
-      .json(
-        new APIResponse(200, 'Sessions retrieved successfully.', { sessions }),
-      );
+  getAllSessions = async (req, res) => {
+    const devices = await devicesRepo.getAllDevices();
+    res.status(200).json(new APIResponse(200, 'Ok', { devices }));
   };
 
   startAllSessions = async (req, res) => {
-    const sessions = await sessionRepo.getSessions();
-    if (!sessions || sessions.length === 0) {
+    const devices = await devicesRepo.getAllDevices();
+    if (!devices || devices.length === 0) {
       return res
         .status(404)
         .json(new APIResponse(404, 'No sessions found to start.'));
     }
 
-    const startPromises = sessions.map(async (session) => {
+    const startPromises = devices.map(async (device) => {
       // We check if the session is already active in memory to avoid duplicate sockets
-      if (!whatsappService.sessions.has(session.sessionId)) {
-        return whatsappService.generateQR(session.sessionId);
+      if (!whatsappService.sessions.has(device.sessionId)) {
+        return whatsappService.generateQR(device.sessionId);
       }
     });
 
@@ -48,8 +44,8 @@ class AuthController {
         .json(new APIError(400, 'Session ID is required to start session.'));
     }
 
-    const session = await sessionRepo.getSessionById(id);
-    if (!session) {
+    const device = await devicesRepo.getDeviceBySessionId(id);
+    if (!device) {
       return res.status(404).json(new APIResponse(404, 'Session not found.'));
     }
 

@@ -1,7 +1,6 @@
 import makeWASocket, { useMultiFileAuthState, DisconnectReason } from 'baileys';
-import { io } from '../app.js';
 import logger from '../utils/logger.js';
-import sessionRepo from '../repositories/session.repo.js';
+import devicesRepo from '../repositories/devices.repo.js';
 import QRCode from 'qrcode';
 import path from 'node:path';
 import fs from 'node:fs/promises';
@@ -50,11 +49,6 @@ class WhatsAppService {
 
       if (qr) {
         console.log(await QRCode.toString(qr, { type: 'terminal' }));
-
-        const qrDataUrl = await QRCode.toDataURL(qr);
-        io.to(sessionId).emit('qr', {
-          QRCode: qrDataUrl,
-        });
       }
 
       if (connection === 'close') {
@@ -78,18 +72,8 @@ class WhatsAppService {
 
           this.sessions.delete(sessionId);
 
-          io.to(sessionId).emit('connection_status', {
-            status: 'disconnected',
-            reconnecting: shouldReconnect,
-          });
-
           this.generateQR(sessionId);
         } else {
-          io.to(sessionId).emit('connection_status', {
-            status: 'disconnected',
-            reconnecting: shouldReconnect,
-          });
-
           this.sessions.delete(sessionId);
 
           await this.deleteSession(sessionId);
@@ -105,8 +89,6 @@ class WhatsAppService {
           }
         }
       } else if (connection === 'open') {
-        io.to(sessionId).emit('connection_status', { status: 'connected' });
-
         this.sessions.set(sessionId, sock);
 
         await sessionRepo.updateSession({

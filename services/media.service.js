@@ -1,8 +1,7 @@
-import fs from "node:fs/promises";
+import fs from 'node:fs/promises';
 import whatsappService from './whatsapp.service.js';
 
 class MediaService {
-
   async clearMedia(filePath) {
     try {
       if (filePath) {
@@ -72,7 +71,7 @@ class MediaService {
           url: media?.path,
         },
         caption,
-        viewOnce: viewOnce === 'true'
+        viewOnce: viewOnce === 'true',
       });
       return result;
     } finally {

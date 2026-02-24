@@ -58,11 +58,7 @@ class Messages {
   linkMessage = async (req, res) => {
     const { id, number, link } = req.body;
 
-    const result = await messageService.sendLinkMessage(
-      id,
-      number,
-      link,
-    );
+    const result = await messageService.sendLinkMessage(id, number, link);
 
     res
       .status(200)
