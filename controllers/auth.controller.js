@@ -31,38 +31,7 @@ class AuthController {
       .json(
         new APIResponse(
           200,
-          `${sessions.length} sessions are being initialized.`,
-        ),
-      );
-  };
-
-  startSession = async (req, res) => {
-    const { id } = req.params;
-    if (!id.trim()) {
-      return res
-        .status(400)
-        .json(new APIError(400, 'Session ID is required to start session.'));
-    }
-
-    const device = await devicesRepo.getDeviceBySessionId(id);
-    if (!device) {
-      return res.status(404).json(new APIResponse(404, 'Session not found.'));
-    }
-
-    if (whatsappService.sessions.has(id)) {
-      return res
-        .status(200)
-        .json(new APIResponse(200, 'Session is already active and connected.'));
-    }
-
-    await whatsappService.generateQR(id);
-
-    res
-      .status(200)
-      .json(
-        new APIResponse(
-          201,
-          'QR code generation started. Scan will appear in your session.',
+          `${devices.length} sessions are being initialized.`,
         ),
       );
   };
@@ -75,31 +44,32 @@ class AuthController {
         .json(new APIError(400, 'Session ID is required to generate QR code.'));
     }
 
-    await whatsappService.generateQR(id);
+    if (whatsappService.sessions.has(id)) {
+      return res
+        .status(200)
+        .json(new APIResponse(200, 'Session is already active and connected.'));
+    }
 
-    res
-      .status(200)
-      .json(
-        new APIResponse(
-          201,
-          'QR code generation started. Scan will appear in your session.',
-        ),
-      );
+    const response = await whatsappService.generateQR(id);
+
+    res.status(200).json(new APIResponse(201, response?.message, response));
   };
 
-  logoutSession = async (req, res) => {
+  deleteSession = async (req, res) => {
     const { id } = req.params;
     if (!id.trim()) {
       res
         .status(400)
-        .json(new APIError(400, 'Session ID is required to logout session.'));
+        .json(new APIError(400, 'Session ID is required to delete session.'));
     }
 
-    await whatsappService.logoutSession(id);
+    await whatsappService.deleteSession(id);
 
     res
       .status(200)
-      .json(new APIResponse(200, 'Session logged out successfully.'));
+      .json(
+        new APIResponse(200, 'Session deleted successfully.'),
+      );
   };
 }
 

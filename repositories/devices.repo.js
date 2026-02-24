@@ -1,4 +1,4 @@
-import { Device } from '../models/device.modal.js';
+import { Device } from '../models/device.model.js';
 
 class DevicesRepository {
   async getDeviceBySessionId(sessionId) {

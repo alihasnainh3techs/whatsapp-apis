@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { errorHandler } from './middlewares/error-handler.js';
 
 const __filepath = fileURLToPath(import.meta.url);
 const __dir = path.dirname(__filepath);

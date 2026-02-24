@@ -8,8 +8,6 @@ const deviceSchema = new mongoose.Schema(
 
     status: { type: String, required: true },
 
-    disconnectReason: { type: String, default: null },
-
     lastDisconnectedAt: { type: Date, default: null },
   },
   { timestamps: true },

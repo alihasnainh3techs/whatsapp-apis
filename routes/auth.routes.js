@@ -7,13 +7,10 @@ const router = Router();
 router.route('/:id/qrcode-session').get(asyncHandler(authController.getQrCode));
 router
   .route('/:id/logout-session')
-  .get(asyncHandler(authController.logoutSession));
+  .delete(asyncHandler(authController.deleteSession));
 router
   .route('/show-all-sessions')
-  .get(asyncHandler(authController.showAllSessions));
+  .get(asyncHandler(authController.getAllSessions));
 router.route('/start-all').get(asyncHandler(authController.startAllSessions));
-router
-  .route('/:id/start-session')
-  .get(asyncHandler(authController.startSession));
 
 export default router;
